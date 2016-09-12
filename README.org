@@ -1,0 +1,292 @@
+# -*- coding: utf-8-unix -*-
+#+TITLE: Groovyコーディングルール
+
+* タイプセーフ
+
+Groovyは動的型付けの言語であるが、静的型付けも利用できます。
+BetterJavaとして使用する場合は、静的型付けを利用したほうが開発効率が上がります。
+
+** クラスに =@TypeChecked= または =@CompileStatic= を付与する
+
+アノテーションを付与することで、コンパイル時に型チェックをしてもらえます。
+
+#+BEGIN_SRC groovy
+
+@TypeChecked
+class MyClass {
+
+  void doSomething() {
+     // コンパイルエラーとなる
+     int i = "str"
+  }
+}
+
+#+END_SRC
+
+*** 例外事項
+
+動的言語の機能（ダックタイピングや内部DSL）を使用したい場合は適用対象外とする。
+
+** メソッドシグネチャには、defを使用せず型を明記する
+
+メソッドシグネチャにdefを使用した場合、Object型を使用しているのと変わりがありません。
+型が明記されているほうが、他人が見た時のコード可読性が向上する。またIDEのサポートを受けやすくなります。
+特にpublicメソッドのシグネチャは必ず型を明記します。
+
+#+BEGIN_SRC groovy
+// NG
+def register(def name, def number) {
+}
+
+// OK
+void register(String name, int number) {
+}
+
+
+#+END_SRC
+
+** Closureを適用する場合、暗黙変数 =it= を使用せず、型と名前を明示的に記載する
+
+defを使用しないのと同じ理由による。
+
+#+BEGIN_SRC groovy
+aCollection.each {
+  println it.name
+}
+
+aCollection.each { MyClass myClass ->
+  println myClass.name
+}
+#+END_SRC
+
+* Javaに寄せるスタイル
+
+Javaらしく書いたほうがわかりやすく、Groovyらしく書くと誤解を招きやすいと思われるものをルールとします。
+
+** returnを省略しない
+
+これは、returnを省略しているかreturnし忘れているのかわかりにくいためです。
+また、早期returnのときには明示的にreturnを書く必要があるためです。
+
+return省略は、Javaのスタイルから離れすぎている感があり、
+Java使いには違和感があります。
+
+#+BEGIN_SRC groovy
+  // NG! 悪くないがJavaらしさに欠ける
+  int add(int num1, int num2) {
+    if (num1 == null) {
+      num2
+    } else if (num2 == null) {
+      num1
+    } else {
+      num1 + num2
+    }
+  }
+
+
+  // OK. Java使いにも違和感ない
+  int add(int num1, int num2) {
+    if (num1 == null) {
+       return num2
+    }
+    if (num2 == null) {
+       return num1
+    }
+    return num1 + num2
+  }
+#+END_SRC
+
+** メソッド呼び出しの括弧は省略しない
+
+括弧を省略することが可読性向上にそれほど寄与しないためです。
+括弧があると、Groovy未経験者でも、それがメソッド呼び出しでことが容易に想像できます。
+括弧がないとそれが文法上どういう意味を持つのか、Groovyのルールを知らなければ、
+メソッド呼び出しであることを理解できません。
+
+#+BEGIN_SRC groovy
+println "hello"    // NG 
+println("hello")   // OK
+
+"GROOVY".contains "OO"  // NG
+"GROOVY".contains("OO") // OK
+#+END_SRC
+
+*** 例外事項
+
+引数がClosure１つの場合は括弧を省略してよい。
+
+#+BEGIN_SRC groovy
+// OK
+[1, 2, 3].each {
+  println it 
+}
+
+// 括弧を省略しないと少しうるさい
+[1, 2, 3].each({
+  println it 
+})
+
+また、内部DSLとして使用する場合も括弧の省略をしてもよい。
+
+#+END_SRC
+
+** null/非nullを条件式として使用しない
+
+暗黙のルールを覚えるより明示的に書いてあるほうが望ましいためです。
+- null,0 ,負数, 空のコレクションなどが真偽どちらに判定される？？
+- 否定(!)と組み合わせるとさらにわけわからないことになる
+
+#+BEGIN_SRC groovy
+    /* NG */
+    if (obj) {
+       // do something if 'obj' is not null. 
+    }
+
+    /* OK */
+    if (obj != null) {
+       // do something if 'obj' is not null. 
+    }
+#+END_SRC
+
+* Groovyに寄せるスタイル
+
+Groovyの文法を活かして、ノイズの少ない見やすいコードを書くためのルールです。
+あまりにJavaに寄せるとGroovyを使う「旨味」が損なわれるので、
+Java使いにも違和感のないは積極的に採用します。
+
+
+** インデントはスペース2つとする
+
+Groovyのほうを2スペースにしておくと、Javaのコードと見分けやすい。
+
+#+BEGIN_SRC groovy
+// NG
+class Member {
+    String name;
+    int age;
+}
+
+// OK! ひと目でGroovyだとわかる
+class Member {
+  String name;
+  int age;
+}
+
+#+END_SRC
+
+** 文字列連結よりダブルクォーテーションを使用する
+
+見た目がすっきりすることが多い。
+
+#+BEGIN_SRC groovy
+    String msg = 'my name is ' + firstName + ' ' + ${lastName} + '.'
+
+    String msg = "my name is ${fisrtName} ${lastName}."
+#+END_SRC
+
+** 文字列リテラルにはシングルクォーテーションを使用する
+
+ダブルクォーテーションを使った文字列(GString)は、文字列リテラル以上の機能を持っています。
+（変数埋め込み、外部コマンド実行など）
+役目をわかりやすくするため、文字列リテラルの場合はシングルクォーテーションを使います。
+これにより読み手に、これは文字列リテラルであると伝えることができます。
+
+特に =$= をエスケープしなければならない場合は、シングルクォーテーションを使用します。
+
+#+BEGIN_SRC groovy
+  // NG! 
+  String s = "これは文字列です"
+
+  // OK! たんなるリテラル文字列だとわかる
+  String s = 'これは文字列です'
+#+END_SRC
+
+** 末尾のセミコロンは使用しない
+
+
+また、インデントスペース2文字同様、Groovyであることがわかりやすくなります。
+
+#+BEGIN_SRC groovy
+  // NG
+  class Member {
+    String name;
+    int age;
+  }
+
+  // OK! Java使いにもあまり違和感がなく、すっきりとした見た目になる
+  class Member {
+    String name
+    int age
+  }
+
+#+END_SRC
+
+** アクセサメソッド呼び出しよりプロパティを使用する
+
+#+BEGIN_SRC groovy
+// NG
+member.setName('yamada')
+
+// OK
+member.name = 'yamada'
+
+#+END_SRC
+
+** 型変換に =as= を使用する
+
+#+BEGIN_SRC groovy
+// NG. 型変換のInteger.parseIntが間に挟まって見難い
+Integer.max(Integer.parseInt("10"),
+            Integer.parseInt("20"))
+
+// OK! 一番見たい情報が左に寄るので読みやすい
+Integer.max("10" as int,
+            "20" as int)
+#+END_SRC
+
+** 正規表現を表す文字列リテラルには =/= スラッシュを使用する
+
+#+BEGIN_SRC groovy
+// NG
+Pattern p = Pattern.compile('^[\\w_]+ =$')
+
+// OK! エスケープが少なくなってわかりやすい
+Pattern p = Pattern.compile(/^[\w_]+ =$/)
+#+END_SRC
+
+
+** 複数行にわたる文字列はヒアドキュメントを使用する
+
+#+BEGIN_SRC groovy
+// NG
+String msg = 'こんにちは\n' +
+             'いい天気ですね\n' +
+             'さようなら'
+
+// OK
+String msg = '''
+こんにちは
+いい天気ですね
+さようなら'''
+
+#+END_SRC
+
+** List, Mapリテラルを使用する
+
+
+#+BEGIN_SRC groovy
+// NG
+List<Integer> numbers = new ArrayList()
+numbers.add(0)
+numbers.add(1)
+numbers.add(2)
+
+// OK
+List<Integer> numbers = [1, 2, 3]
+
+#+END_SRC
+
+* 参考
+
+http://groovy-lang.org/style-guide.html
+https://dzone.com/articles/groovy-coding-style http://aetas.pl/?p=247
