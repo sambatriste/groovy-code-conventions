@@ -47,7 +47,7 @@ void register(String name, int number) {
 
 ** Closureを適用する場合、暗黙変数 =it= を使用せず、型と名前を明示的に記載する
 
-defを使用しないのと同じ理由による。
+defを使用しないのと同じ理由です。
 
 #+BEGIN_SRC groovy
 aCollection.each {
@@ -125,10 +125,9 @@ println("hello")   // OK
 [1, 2, 3].each({
   println it 
 })
+#+END_SRC
 
 また、内部DSLとして使用する場合も括弧の省略をしてもよい。
-
-#+END_SRC
 
 ** null/非nullを条件式として使用しない
 
@@ -179,9 +178,11 @@ class Member {
 見た目がすっきりすることが多い。
 
 #+BEGIN_SRC groovy
-    String msg = 'my name is ' + firstName + ' ' + ${lastName} + '.'
+// NG
+String msg = 'my name is ' + firstName + ' ' + ${lastName} + '.'
 
-    String msg = "my name is ${fisrtName} ${lastName}."
+// OK
+String msg = "my name is ${fisrtName} ${lastName}."
 #+END_SRC
 
 ** 文字列リテラルにはシングルクォーテーションを使用する
@@ -202,7 +203,6 @@ class Member {
 #+END_SRC
 
 ** 末尾のセミコロンは使用しない
-
 
 また、インデントスペース2文字同様、Groovyであることがわかりやすくなります。
 
@@ -288,5 +288,5 @@ List<Integer> numbers = [1, 2, 3]
 
 * 参考
 
-http://groovy-lang.org/style-guide.html
-https://dzone.com/articles/groovy-coding-style http://aetas.pl/?p=247
+- http://groovy-lang.org/style-guide.html
+- https://dzone.com/articles/groovy-coding-style http://aetas.pl/?p=247
