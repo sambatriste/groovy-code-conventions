@@ -1,6 +1,6 @@
 * これは何？
 
-Groovy用のコーディングルールです。
+[[./groovy-code-conventions.org][Groovyコーディング規約]]です。
 
 ** 目的
 
