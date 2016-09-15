@@ -1,0 +1,39 @@
+* これは何？
+
+Groovy用のコーディングルールです。
+
+** 目的
+
+Groovyの文法はJavaとの互換性が非常に高いため、ほぼJavaと同じ書き方ができます。
+これはJava使いのGroovy初心者にとって非常に大きいメリットといえます。
+一方、Javaの文法だけを使用していると、Groovyの良さを活かしきれません。
+Groovyの文法を活用すると、Javaで書くには非常にかったるい処理を
+簡潔に記載することができます。
+
+このようにGroovyは、Groovyぽく書くことも、Javaぽく書くこともできますが、
+人によってコーディングスタイルがバラバラになる可能性があります。
+
+そこで、
+- 普段はJava使いのGroovy初心者にやさしく
+- Groovyらしさをそれなりに発揮できる
+コーディング規約を考えてみました。
+
+
+* 文書修正したい場合
+
+org-modeで書かれています。Emacsを使われる方はそのままお使いください。
+
+そうでない方は、以下のような対処をお願いします。
+
+- pandocでMarkdown等に変換する
+- exportする時だけEmacsを使う
+- org-ruby等でorgファイルからHTMLを出力する
+- HTMLをオーサリングツールなどで編集する
+
+
+* ライセンス
+
+
+Creative Commons Attribution 4.0 International (CC BY 4.0) とします。
+
+https://creativecommons.org/licenses/by/4.0/
