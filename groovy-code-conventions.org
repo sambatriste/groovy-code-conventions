@@ -1,5 +1,5 @@
 # -*- coding: utf-8-unix -*-
-#+TITLE: Groovyコーディングルール
+#+TITLE: Groovyコーディング規約
 
 * タイプセーフ
 
