@@ -21,7 +21,7 @@ Groovyの文法を活用すると、Javaで書くには非常にかったるい�
 そこで、
 - Java使いのGroovy初心者にやさしく
 - Groovyらしさをそれなりに発揮できる
-コーディング規約を考えてみました。
+[[./groovy-code-conventions.org][Groovyコーディング規約]]を考えてみました。
 
 
 * 文書修正したい場合
