@@ -9,17 +9,17 @@
 ** 目的
 
 Groovyの文法はJavaとの互換性が非常に高いため、ほぼJavaと同じ書き方ができます。
-これはJava使いのGroovy初心者にとって非常に大きいメリットといえます。
+これは *Java使いのGroovy初心者* にとって非常に大きいメリットといえます。
 
 一方、Javaの文法だけを使用していると、Groovyの良さを活かしきれません。
 Groovyの文法を活用すると、Javaで書くには非常にかったるい処理を
 簡潔に記載することができます。
 
 このようにGroovyは、Groovyぽく書くことも、Javaぽく書くこともできますが、
-人によってコーディングスタイルがバラバラになる可能性があります。
+この記述の幅の大きさのため、人によってコーディングスタイルがバラバラになる可能性があります。
 
 そこで、
-- 普段はJava使いのGroovy初心者にやさしく
+- Java使いのGroovy初心者にやさしく
 - Groovyらしさをそれなりに発揮できる
 コーディング規約を考えてみました。
 
@@ -34,6 +34,12 @@ org-modeで書かれています。Emacsを使われる方はそのままお使�
 - exportする時だけEmacsを使う
 - org-ruby等でorgファイルからHTMLを出力する
 - HTMLをオーサリングツールなどで編集する
+
+
+* 参考URL
+
+- http://groovy-lang.org/style-guide.html
+- https://dzone.com/articles/groovy-coding-style http://aetas.pl/?p=247
 
 
 * ライセンス

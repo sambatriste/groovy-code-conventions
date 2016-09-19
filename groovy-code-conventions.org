@@ -156,7 +156,8 @@ Java使いにも違和感のないは積極的に採用します。
 
 ** インデントはスペース2つとする
 
-Groovyのほうを2スペースにしておくと、Javaのコードと見分けやすい。
+Groovyのほうを2スペースにしておくと、Javaのコードと見分けやすいです。
+IDEの設定でインデントは2スペースとしておきます。
 
 #+BEGIN_SRC groovy
 // NG
@@ -167,15 +168,35 @@ class Member {
 
 // OK! ひと目でGroovyだとわかる
 class Member {
+  String name
+  int age
+}
+
+#+END_SRC
+
+** 末尾のセミコロンは使用しない
+
+記述がスッキリとします。
+また、インデントスペース2文字同様、Groovyであることがわかりやすくなります。
+
+#+BEGIN_SRC groovy
+// NG
+class Member {
   String name;
   int age;
+}
+
+// OK! Java使いにもあまり違和感がなく、すっきりとした見た目になる
+class Member {
+  String name
+  int age
 }
 
 #+END_SRC
 
 ** 文字列連結よりダブルクォーテーションを使用する
 
-見た目がすっきりすることが多い。
+テンプレートリテラルを使用したほうが見た目がすっきりします。
 
 #+BEGIN_SRC groovy
 // NG
@@ -202,37 +223,27 @@ String msg = "my name is ${fisrtName} ${lastName}."
   String s = 'これは文字列です'
 #+END_SRC
 
-** 末尾のセミコロンは使用しない
-
-また、インデントスペース2文字同様、Groovyであることがわかりやすくなります。
-
-#+BEGIN_SRC groovy
-  // NG
-  class Member {
-    String name;
-    int age;
-  }
-
-  // OK! Java使いにもあまり違和感がなく、すっきりとした見た目になる
-  class Member {
-    String name
-    int age
-  }
-
-#+END_SRC
-
 ** アクセサメソッド呼び出しよりプロパティを使用する
+
+プロパティを使用したほうがノイズが減り本質的な記述が残ります。
 
 #+BEGIN_SRC groovy
 // NG
 member.setName('yamada')
-
 // OK
 member.name = 'yamada'
+
+
+// NG
+copy.setHoge(orig.getHoge())
+// OK
+copy.hoge = orig.hoge
 
 #+END_SRC
 
 ** 型変換に =as= を使用する
+
+型変換の記述は情報としては重要でないので、asを使用して後ろ（右側）に追いやります。
 
 #+BEGIN_SRC groovy
 // NG. 型変換のInteger.parseIntが間に挟まって見難い
@@ -273,20 +284,29 @@ String msg = '''
 
 ** List, Mapリテラルを使用する
 
-
 #+BEGIN_SRC groovy
 // NG
 List<Integer> numbers = new ArrayList()
 numbers.add(0)
 numbers.add(1)
 numbers.add(2)
+assert numbers.get(0) == 0
 
 // OK
 List<Integer> numbers = [1, 2, 3]
+assert numbers[0] == 0
+
+
+// NG
+Map<String, Integer> scores = new HashMap<>()
+scores.put('bob', 40)
+scores.put('mike', 90)
+scores.put('john', 60)
+assert scores.get('mike') == 90
+
+// OK
+Map<String, Integer> scores = [bob: 40, mike: 90, john: 60]
+assert scores['mike'] == 90
 
 #+END_SRC
 
-* 参考
-
-- http://groovy-lang.org/style-guide.html
-- https://dzone.com/articles/groovy-coding-style http://aetas.pl/?p=247
