@@ -39,7 +39,8 @@ org-modeで書かれています。Emacsを使われる方はそのままお使�
 * 参考URL
 
 - http://groovy-lang.org/style-guide.html
-- https://dzone.com/articles/groovy-coding-style http://aetas.pl/?p=247
+- https://dzone.com/articles/groovy-coding-style
+- http://aetas.pl/?p=247
 
 
 * ライセンス
