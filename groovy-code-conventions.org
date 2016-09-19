@@ -30,7 +30,7 @@ class MyClass {
 ** メソッドシグネチャには、defを使用せず型を明記する
 
 メソッドシグネチャにdefを使用した場合、Object型を使用しているのと変わりがありません。
-型が明記されているほうが、他人が見た時のコード可読性が向上する。またIDEのサポートを受けやすくなります。
+型が明記されているほうが、他人が見た時のコード可読性が向上します。またIDEのサポートを受けやすくなります。
 特にpublicメソッドのシグネチャは必ず型を明記します。
 
 #+BEGIN_SRC groovy
@@ -56,6 +56,18 @@ aCollection.each {
 
 aCollection.each { MyClass myClass ->
   println myClass.name
+}
+#+END_SRC
+
+*** 例外事項
+
+あまりに自明な場合は =it= を使用してもよいです。
+
+#+BEGIN_SRC groovy
+// OK. Stringであることがすぐわかるためitでよい
+List<String> memberNames = ...
+List<String> honorifics = memberName.colect {
+  return it + '様'
 }
 #+END_SRC
 
@@ -113,7 +125,7 @@ println("hello")   // OK
 
 *** 例外事項
 
-引数がClosure１つの場合は括弧を省略してよい。
+引数がClosure1つの場合は括弧を省略してよい。
 
 #+BEGIN_SRC groovy
 // OK
