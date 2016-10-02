@@ -66,7 +66,7 @@ aCollection.each { MyClass myClass ->
 #+BEGIN_SRC groovy
 // OK. Stringであることがすぐわかるためitでよい
 List<String> memberNames = ...
-List<String> honorifics = memberName.collect {
+List<String> honorifics = memberNames.collect {
   return it + '様'
 }
 #+END_SRC
@@ -212,7 +212,7 @@ class Member {
 
 #+BEGIN_SRC groovy
 // NG
-String msg = 'my name is ' + firstName + ' ' + ${lastName} + '.'
+String msg = 'my name is ' + firstName + ' ' + lastName + '.'
 
 // OK
 String msg = "my name is ${fisrtName} ${lastName}."
